@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, {Fragment, useEffect, useState} from 'react';
 
 import {
   StyleSheet,
@@ -8,28 +8,29 @@ import {
   StatusBar,
   ScrollView,
   TouchableOpacity,
-} from "react-native";
+} from 'react-native';
 
-import ShiftScreen from "../screens/ShiftScreen";
-import { Colors } from "../constants/Colors";
-import TabBar from "../components/TabBar";
-import Heading from "../components/Heading";
-import axios from "axios";
-import Shift from "../components/Shift";
-const url = "http://10.0.2.2:8080/shifts";
+import ShiftScreen from '../screens/ShiftScreen';
+import {Colors} from '../constants/Colors';
+import TabBar from '../components/TabBar';
+import Heading from '../components/Heading';
+import axios from 'axios';
+import Shift from '../components/Shift';
+const url = 'http://10.0.2.2:8080/shifts';
 
-const HelsinkiArea = "Helsinki";
-const TurkuArea = "Turku";
-const TampereArea = "Tampere";
+const HelsinkiArea = 'Helsinki';
+const TurkuArea = 'Turku';
+const TampereArea = 'Tampere';
 
 export default function AvailableScreen() {
   const [isActionTriggered, setIsActionTriggered] = useState(false);
   const [Availabledata, setAvailabledata] = useState([]);
   const [Helsinki, setHelsinki] = useState([]);
-  const [Turku, setTurku] = useState([]);
   const [Tampere, setTampere] = useState([]);
   const [Area, setArea] = useState(HelsinkiArea);
-  const [shiftInteraction, setShiftInteraction] = useState("");
+  const [Turku, setTurku] = useState([]);
+
+  const [shiftInteraction, setShiftInteraction] = useState('');
 
   const [CurrentData, setCurrentData] = useState([]);
 
@@ -38,14 +39,14 @@ export default function AvailableScreen() {
       const res = await axios.get(url);
       setAvailabledata(res.data);
       const Data = res.data;
-      Data.forEach((e) => {
+      Data.forEach(e => {
         try {
           if (e.area === HelsinkiArea) {
-            setHelsinki((prev) => [...prev, e]);
+            setHelsinki(prev => [...prev, e]);
           } else if (e.area === TampereArea) {
-            setTampere((prev) => [...prev, e]);
+            setTampere(prev => [...prev, e]);
           } else if (e.area === TurkuArea) {
-            setTurku((prev) => [...prev, e]);
+            setTurku(prev => [...prev, e]);
           }
         } catch (err) {
           console.log(err);
@@ -96,13 +97,11 @@ export default function AvailableScreen() {
           />
         </View>
         <View>
-          <Heading title={"Today"} />
+          <Heading title={'Today'} />
           {CurrentData?.map((e, i) => (
             <Fragment key={i}>
               <Shift
-                setIsActionTriggered={() =>
-                  setIsActionTriggered((prev) => !prev)
-                }
+                setIsActionTriggered={() => setIsActionTriggered(prev => !prev)}
                 from={e.startTime}
                 to={e.endTime}
                 desc={e.area}
@@ -125,14 +124,14 @@ const styles = StyleSheet.create({
   footer: {
     backgroundColor: Colors.grayeshBlue,
     height: 65,
-    alignItems: "center",
-    justifyContent: "center",
-    display: "flex",
-    textAlign: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    textAlign: 'center',
   },
   footerContainer: {
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
   },
   backgroundStyle: {
     flex: 1,
